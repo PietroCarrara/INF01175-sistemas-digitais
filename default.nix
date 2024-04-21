@@ -18,7 +18,7 @@ mkShell rec {
           let
             repo = fetchFromGitHub {
               owner = "ghdl";
-              repo = name;
+              repo = "ghdl-language-server";
               rev = "c37639859f4c663f1f8c77ef2c24d0ef3265e3b1";
               hash = "sha256-iuuuYU/lT+IDFYrdIXrp9v+3skdvAfrAacJVIkdgQJU=";
             };
