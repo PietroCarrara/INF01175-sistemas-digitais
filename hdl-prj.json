@@ -1,0 +1,8 @@
+{
+  "options": {
+    "ghdl_analysis": [
+      "--workdir=src",
+      "--ieee=standard"
+    ]
+  }
+}
