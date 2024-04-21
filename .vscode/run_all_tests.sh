@@ -10,9 +10,11 @@ for i in ./tests/*.vhdl; do
 
   echo testing $ENTITY...
 
+  mkdir -p wave-files/
+
   ghdl -a "$i"
   ghdl -e "$ENTITY"
-  ghdl -r "$ENTITY"
+  ghdl -r "$ENTITY" --wave="wave-files/$ENTITY.ghw"
 
   echo done
 done

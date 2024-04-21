@@ -6,6 +6,7 @@ mkShell rec {
   name = "INF01175";
 
   nativeBuildInputs = [
+    gtkwave
     ghdl-llvm
     (callPackage ./nix/ghdl-ls.nix { ghdl = ghdl-llvm; })
 
