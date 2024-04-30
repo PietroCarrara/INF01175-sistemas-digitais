@@ -1,0 +1,26 @@
+name: 'Link Checker: All English'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  check-links:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ghdl/setup-ghdl-ci@nightly
+        with:
+          backend: llvm
+
+      - name: test
+        run: bash ./run_all_tests.sh
