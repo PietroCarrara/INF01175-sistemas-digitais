@@ -13,41 +13,51 @@ mkShell rec {
     # VSCode pre-configured with good VHDL extensions
     (vscode-with-extensions.override {
       vscode = pkgs.vscode.fhsWithPackages (ps: [ ]);
-      vscodeExtensions = with vscode-extensions; [
-        jnoortheen.nix-ide
-        (
-          let
-            repo = fetchFromGitHub {
-              owner = "ghdl";
-              repo = "ghdl-language-server";
-              rev = "c37639859f4c663f1f8c77ef2c24d0ef3265e3b1";
-              hash = "sha256-iuuuYU/lT+IDFYrdIXrp9v+3skdvAfrAacJVIkdgQJU=";
-            };
-            vhdl-lsp = buildNpmPackage
-              rec {
-                name = "ghdl-language-server";
-                version = "0.1.0-dev";
-                src = "${repo}/vscode-client";
-                npmDepsHash = "sha256-zRLowgd/hYJ87iEWAPqfU8vJDbUMRaQDWkMnrgu/BuQ=";
-                buildPhase = ''
-                  vsce package --skip-license
-                  mv vhdl-lsp-0.1.0-dev.vsix vhdl-lsp-0.1.0-dev.zip
-                '';
-                nativeBuildInputs = [
-                  vsce
-                ];
-              };
-          in
-          vscode-utils.buildVscodeExtension rec {
-            name = "ghdl-language-server";
-            vscodeExtName = "vhdl-lsp";
-            vscodeExtPublisher = "tgingold";
-            vscodeExtUniqueId = "${vscodeExtPublisher}.${vscodeExtName}";
-            version = "0.1.0-dev";
-            src = "${vhdl-lsp}/lib/node_modules/vhdl-lsp/vhdl-lsp-0.1.0-dev.zip";
+      vscodeExtensions = with vscode-extensions;
+        (vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "vhdl-linter";
+            publisher = "g0t00";
+            version = "1.8.23";
+            sha256 = "sha256-j7ldQGWaRkDqZCA4RF95HXG7fLs5fTeJO/5FqVRH8No=";
           }
-        )
-      ];
+        ])
+        ++
+        [
+          jnoortheen.nix-ide
+          (
+            let
+              repo = fetchFromGitHub {
+                owner = "ghdl";
+                repo = "ghdl-language-server";
+                rev = "c37639859f4c663f1f8c77ef2c24d0ef3265e3b1";
+                hash = "sha256-iuuuYU/lT+IDFYrdIXrp9v+3skdvAfrAacJVIkdgQJU=";
+              };
+              vhdl-lsp = buildNpmPackage
+                rec {
+                  name = "ghdl-language-server";
+                  version = "0.1.0-dev";
+                  src = "${repo}/vscode-client";
+                  npmDepsHash = "sha256-zRLowgd/hYJ87iEWAPqfU8vJDbUMRaQDWkMnrgu/BuQ=";
+                  buildPhase = ''
+                    vsce package --skip-license
+                    mv vhdl-lsp-0.1.0-dev.vsix vhdl-lsp-0.1.0-dev.zip
+                  '';
+                  nativeBuildInputs = [
+                    vsce
+                  ];
+                };
+            in
+            vscode-utils.buildVscodeExtension rec {
+              name = "ghdl-language-server";
+              vscodeExtName = "vhdl-lsp";
+              vscodeExtPublisher = "tgingold";
+              vscodeExtUniqueId = "${vscodeExtPublisher}.${vscodeExtName}";
+              version = "0.1.0-dev";
+              src = "${vhdl-lsp}/lib/node_modules/vhdl-lsp/vhdl-lsp-0.1.0-dev.zip";
+            }
+          )
+        ];
     })
   ];
 }
