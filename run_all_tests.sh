@@ -7,7 +7,7 @@ for i in ./src/*.vhdl; do
   ENTITY=${i%*.vhdl}
   ENTITY=$(basename $ENTITY)
 
-  ghdl -i "$i1"
+  ghdl -i "$i"
   ghdl -m "$ENTITY"
   ghdl --synth --out=none "$ENTITY"
 done
