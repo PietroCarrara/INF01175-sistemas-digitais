@@ -6,24 +6,24 @@ entity eight_bit_register_test is end;
 architecture testbench of eight_bit_register_test is
   constant period      :  time      := 10 ns;
   signal finished      :  bit       := '0';
-  signal clk           :  std_logic := '0';
+  signal clk           :  std_ulogic := '0';
   component eight_bit_register is
     port (
-      clk           : in  std_logic;
-      reset         : in  std_logic;
-      set_value     : in  std_logic;
-      shift_left    : in  std_logic;
-      shift_right   : in  std_logic;
-      input         : in  std_logic_vector(7 downto 0);
-      output        : out std_logic_vector(7 downto 0)
+      clk           : in  std_ulogic;
+      reset         : in  std_ulogic;
+      set_value     : in  std_ulogic;
+      shift_left    : in  std_ulogic;
+      shift_right   : in  std_ulogic;
+      input         : in  std_ulogic_vector(7 downto 0);
+      output        : out std_ulogic_vector(7 downto 0)
     );
   end component;
-  signal reset         :  std_logic := '0';
-  signal set_value     :  std_logic := '0';
-  signal shift_left    :  std_logic := '0';
-  signal shift_right   :  std_logic := '0';
-  signal input         :  std_logic_vector(7 downto 0);
-  signal output        :  std_logic_vector(7 downto 0);
+  signal reset         :  std_ulogic := '0';
+  signal set_value     :  std_ulogic := '0';
+  signal shift_left    :  std_ulogic := '0';
+  signal shift_right   :  std_ulogic := '0';
+  signal input         :  std_ulogic_vector(7 downto 0);
+  signal output        :  std_ulogic_vector(7 downto 0);
 begin
   clk <= not clk after period/2 when finished /= '1' else '0';
 
